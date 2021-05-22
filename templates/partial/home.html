@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+{% block head %}
+<title style="color: blueviolet">Posts</title>
+<meta name="description" content="{{ desc }}"/>
+<meta name="keywords" content="{{ key }}"/>
+<meta name="image" content="{{ obj.image.url}}"/>
+{% endblock %}
+
+{% block body %}
+
+<div class="main-base">
+  <h1 class="m-0 text-dark text-center " >Posts</h1>
+  {% if not posts %}
+  <b class="m-0 text-dark text-center " >Статьи не найдены</b>
+  {% else %}
+    {% for obj in posts %}
+  <div class="container">
+     <div class="m-0 text-dark" >
+                <div class="card-body">
+                    <h2 class="card-title" href="{{ obj.get_absolute_url }}" >{{ obj.title }}</h2>
+                    <p >{{ obj.content }}</p>
+                    <img  src="{{ obj.image.url }}" alt="">
+                </div>
+            </div>
+    </div>
+    <br><br><br>
+    {% endfor %}
+  {% endif %}
+</div>
+
+
+  {% if posts.has_previous %}
+  <a href="?page={{ posts.previous_page_number }}">Назад</a>
+  {% endif %}
+  <span>{{ posts.number }} / {{ posts.num_pages }}</span>
+  {% if posts.has_next %}
+  <a href="?page={{ posts.next_page_number }}" >Вперед</a>
+  {% endif %}
+{% endblock %}
